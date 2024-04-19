@@ -19,22 +19,34 @@
             }
         }
         function playRound(playerChoice,computerChoice){
+            let playerChoiceTemp;
             if(playerChoice=="rock"){
-                playerChoice=1;
+                playerChoiceTemp=1;
             }
-            else if(randomChoice=="paper"){
-                playerChoice=2;
+            else if(playerChoice=="paper"){
+                playerChoiceTemp=2;
             }
-            else if(randomChoice=="scissor"){
-                playerChoice=3;
+            else if(playerChoice=="scissor"){
+                playerChoiceTemp=3;
             }
-            return playerChoice;
+            if(playerChoiceTemp==computerChoice){
+                console.log("It's a tie! ")
+            }else if((playerChoiceTemp-computerChoice)== -1 ||(playerChoiceTemp-computerChoice)== 2){
+                console.log("You lose!");
+            }else if((playerChoiceTemp-computerChoice)== -2 ||(playerChoiceTemp-computerChoice)== 1){
+                console.log("You win!");
+            }
         }
-        let playerChoice = getPlayerChoice();
-        const computerChoice = getComputerChoice();
-        console.log(playerChoice);
 
-
+        function playGame(){
+            for (i=0 ; i<5 ; i++){
+                const computerChoice = getComputerChoice();
+                let playerChoice = getPlayerChoice();
+                playRound(playerChoice,computerChoice);
+            }
+        }
+        
+        playGame();
         
     </script>
 </body>
