@@ -6,11 +6,34 @@
     <title>Document</title>
 </head>
 <body>
+    <button>Rock</button>
+    <button>Paper</button>
+    <button>Scissors</button>
+    <div>Result: </div>
+    <p class="round">Round: 1</p>
+
+
     <script>
+
+        const btn = document.querySelectorAll("button");
+        const p = document.querySelector(".round");
+        let resultText = document.querySelector("div");
+        let gameCounter = 0;
+        let playerCounter = 0;
+        let computerCounter = 0;
+
+        function buttonTemp(button){
+            console.log(button);
+        }
+
+        btn.forEach((button) => button.addEventListener('click',(e)=>{playGame(button.textContent)}));
+
+
         function getComputerChoice(){
             let randomChoice = Math.floor(Math.random()*(4-1))+1;
             return randomChoice;
         }
+        
         function getPlayerChoice(){
             let playerChoice=prompt("Rock, paper, or scissor?");
             playerChoice=playerChoice.toLowerCase();
@@ -26,27 +49,38 @@
             else if(playerChoice=="paper"){
                 playerChoiceTemp=2;
             }
-            else if(playerChoice=="scissor"){
+            else if(playerChoice=="scissors"){
                 playerChoiceTemp=3;
             }
             if(playerChoiceTemp==computerChoice){
-                console.log("It's a tie! ")
+                playerCounter++;
+                computerCounter++;
+                return "It's a tie!";
             }else if((playerChoiceTemp-computerChoice)== -1 ||(playerChoiceTemp-computerChoice)== 2){
-                console.log("You lose!");
+                computerCounter++;
+                return "You lose!";
             }else if((playerChoiceTemp-computerChoice)== -2 ||(playerChoiceTemp-computerChoice)== 1){
-                console.log("You win!");
+                playerCounter++;
+                return "You win!";
             }
         }
 
-        function playGame(){
-            for (i=0 ; i<5 ; i++){
+        function playGame(buttonText){
+                gameCounter++;
+                p.textContent = `Round: ${gameCounter}`;
                 const computerChoice = getComputerChoice();
-                let playerChoice = getPlayerChoice();
-                playRound(playerChoice,computerChoice);
-            }
+                const playerChoice = buttonText.toLowerCase();
+                const result = playRound(playerChoice,computerChoice);
+                resultText.textContent = `Result:  ${result}`;
+                if(gameCounter==5){
+                    btn.forEach((button)=>button.remove());
+                    if (playerCounter > computerCounter){
+                        resultText.textContent = `Result: You won the game! :D`;
+                    } else {
+                        resultText.textContent = `Result: You lost the game! :(`;
+                    }
+                }
         }
-        
-        playGame();
         
     </script>
 </body>
